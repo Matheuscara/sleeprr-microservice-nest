@@ -1,0 +1,30 @@
+@_id = 670487c7a007cf184743d22d
+
+### Criar uma nova reserva
+POST http://localhost:3000/reservations
+Content-Type: application/json
+
+{
+  "startDate": "2024-10-07T10:00:00Z",
+  "endDate": "2024-10-10T10:00:00Z",
+  "placeId": "123456dd",
+  "invoiceId": "78910000"
+}
+
+### Listar todas as reservas
+GET http://localhost:3000/reservations
+
+### Obter uma reserva específica por ID
+GET http://localhost:3000/reservations/{{_id}}
+
+### Atualizar uma reserva existente
+PATCH http://localhost:3000/reservations/{{_id}}
+Content-Type: application/json
+
+{
+  "startDate": "2024-10-28T10:00:00Z",
+  "endDate": "2024-10-29T10:00:00Z"
+}
+
+### Deletar uma reserva
+DELETE http://localhost:3000/reservations/{{_id}}

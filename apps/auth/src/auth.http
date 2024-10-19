@@ -1,0 +1,10 @@
+@_id = 670487c7a007cf184743d22d
+
+### login
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+  "email": "matheusnbnnb@gmail.com",
+  "password": "matheusdskjMk...dsdsss@1234"
+}

@@ -1,0 +1,15 @@
+@_id = 670487c7a007cf184743d22d
+
+### Criar um novo usuario
+POST http://localhost:3001/users
+Content-Type: application/json
+
+{
+  "email": "matheusnbnnb@gmail.com",
+  "password": "matheusdskjMk...dsdsss@1234"
+}
+
+### Retorna um usuario
+### Autenticacao necessaria
+GET http://localhost:3001/users
+Content-Type: application/json
