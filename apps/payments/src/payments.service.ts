@@ -1,8 +1,8 @@
 import { CreateChargeDto } from '@app/common';
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 import { CustomerDto } from './dto/customer';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PaymentsService {
@@ -40,46 +40,15 @@ export class PaymentsService {
   //   await this.stripe.checkout.sessions.create();
   // }
 
-  async createCharge({
-    card,
-    amount,
-  }: CreateChargeDto): Promise<{ url: string }> {
-    const session = await this.stripe.checkout.sessions.create({
+  async createCharge({ amount }: CreateChargeDto) {
+    const paymentIntent = await this.stripe.paymentIntents.create({
+      amount: amount * 100,
+      confirm: true,
+      currency: 'usd',
+      payment_method: 'pm_card_visa',
       payment_method_types: ['card'],
-      mode: 'subscription',
-      client_reference_id: '123',
-      customer: 'cus_R3lXRLQWH4ortM', //cliente id stripe
-      success_url: 'https://example.com/success',
-      cancel_url: 'https://example.com/cancel',
-      line_items: [
-        {
-          price: 'prod_R3lbJ9rmjwK77l', //produto id stripe
-          quantity: 1,
-        },
-      ],
     });
-    console.log(session);
-    return {
-      url: session.url,
-    };
 
-    // const paymentMethod = await this.stripe.paymentMethods.create({
-    //   type: 'card',
-    //   card,
-    // });
-
-    // const paymentIntent = await this.stripe.paymentIntents.create({
-    //   payment_method: paymentMethod.id,
-    //   amount: amount * 100,
-    //   confirm: true,
-    //   currency: 'BRL',
-    //   automatic_payment_methods: {
-    //     enabled: true,
-    //     allow_redirects: 'never',
-    //   },
-    //   // payment_method_types: ['card'],
-    // });
-
-    // return paymentIntent;
+    return paymentIntent;
   }
 }

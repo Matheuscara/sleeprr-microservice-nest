@@ -44,11 +44,16 @@ export class UsersService {
   }
 
   async getUser(getUserDto: GetUserDto) {
-    return this.usersRepository.findOne(getUserDto);
+    const user = this.usersRepository.findOne(getUserDto).catch(() => null);
+
+    if (!user) {
+      throw new UnprocessableEntityException('User not found');
+    }
+
+    return user;
   }
 
   async verifyUser(email: string, password: string) {
-    console.log(email, password);
     const user = await this.usersRepository.findOne({ email });
     const passwordIsValid = await bcrypt.compare(password, user.password);
     if (!passwordIsValid) {
